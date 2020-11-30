@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gestions liste de personne</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            
+            .container{overflow: hidden}
+            .tab{float: left;}
+            .tab-2{margin-left: 50px}
+            .tab-2 input{display: block;margin-bottom: 10px}
+            tr{transition:all .25s ease-in-out}
+            tr:hover{background-color:#EEE;cursor: pointer}
+            
+        </style>
+        
+    </head>
+    <body>
+        
+        <div class="container">
+            <div class="tab tab-1">
+                <table id="table" border="1">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Age</th>
+                    </tr>
+                    <tr>
+                        <td>Jhon</td>
+                        <td>Wick</td>
+                        <td>45</td>
+                    </tr>
+                    <tr>
+                        <td>Hans</td>
+                        <td>Zimmer</td>
+                        <td>65</td>
+                    </tr>
+                    <tr>
+                        <td>Haruki</td>
+                        <td>Murakami</td>
+                        <td>50</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="tab tab-2">
+                Nom :<input type="text" name="Nom" id="Nom">
+                Prénom :<input type="text" name="Prénom" id="Prénom">
+                Age :<input type="number" name="age" id="age">
+                
+                <button onclick="Ajouterchamp();">Ajouter</button>
+                <button onclick="Editerchamp();">Editer</button>
+                <button onclick="Supprimerchamp();">Supprimer</button>
+            </div>
+        </div>
+        
+        <script>
+            
+            var Champ,
+                table = document.getElementById("table");
+            
+
+            function champvide()
+            {
+                var estvide = false,
+                    Nom = document.getElementById("Nom").value,
+                    Prénom = document.getElementById("Prénom").value,
+                    age = document.getElementById("age").value;
+            
+                if(Nom === ""){
+                    alert("Ce champ doit étre rempli");
+                    estvide = true;
+                }
+                else if(Prénom === ""){
+                    alert("Ce champ doit étre rempli");
+                    estvide = true;
+                }
+                else if(age === ""){
+                    alert("Ce champ doit étre rempli");
+                    estvide = true;
+                }
+                return estvide;
+            }
+            
+
+            function Ajouterchamp()
+            {
+
+                if(!champvide()){
+                var Champnouveau = table.insertRow(table.length),
+                    cell1 = Champnouveau.insertCell(0),
+                    cell2 = Champnouveau.insertCell(1),
+                    cell3 = Champnouveau.insertCell(2),
+                    Nom = document.getElementById("Nom").value,
+                    Prénom = document.getElementById("Prénom").value,
+                    age = document.getElementById("age").value;
+            
+                cell1.innerHTML = Nom;
+                cell2.innerHTML = Prénom;
+                cell3.innerHTML = age;
+
+                selectionerunchamp();
+            }
+            }
+            
+
+            function selectionerunchamp()
+            {
+                
+                for(var i = 1; i < table.rows.length; i++)
+                {
+                    table.rows[i].onclick = function()
+                    {
+
+                      Champ = this.rowIndex;
+                      document.getElementById("Nom").value = this.cells[0].innerHTML;
+                      document.getElementById("Prénom").value = this.cells[1].innerHTML;
+                      document.getElementById("age").value = this.cells[2].innerHTML;
+                    };
+                }
+            }
+            selectionerunchamp();
+            
+            function Editerchamp()
+            {
+                var Nom = document.getElementById("Nom").value,
+                    Prénom = document.getElementById("Prénom").value,
+                    age = document.getElementById("age").value;
+               if(!champvide()){
+                table.rows[Champ].cells[0].innerHTML = Nom;
+                table.rows[Champ].cells[1].innerHTML = Prénom;
+                table.rows[Champ].cells[2].innerHTML = age;
+              }
+            }
+            
+            function Supprimerchamp()
+            {
+                table.deleteRow(Champ);
+
+                document.getElementById("Nom").value = "";
+                document.getElementById("Prénom").value = "";
+                document.getElementById("age").value = "";
+            }
+        </script>
+        
+    </body>
+</html>
